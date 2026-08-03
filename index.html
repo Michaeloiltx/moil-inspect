@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0D2137" />
+  <title>M Oil LLC – Inspection</title>
+    <style>
+:root {
+  --navy: #0D2137;
+  --blue: #1B4F72;
+  --accent: #2980B9;
+  --green: #1E7E34;
+  --orange: #D35400;
+  --red: #C0392B;
+  --bg: #F4F6F8;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --muted: #6B7280;
+  --border: #E5E7EB;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  font-size: 16px;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* HEADER */
+.app-header {
+  background: var(--navy);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-text strong { font-size: 15px; }
+.brand-text span { font-size: 11px; opacity: 0.75; }
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* SCREENS */
+.screen {
+  display: none;
+  padding: 16px;
+  padding-bottom: 80px;
+  animation: fadeIn 0.2s ease;
+}
+
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.screen-header h2 {
+  flex: 1;
+  font-size: 20px;
+  color: var(--navy);
+}
+
+.screen-header.sticky {
+  position: sticky;
+  top: 60px;
+  background: var(--bg);
+  z-index: 50;
+  padding: 8px 0;
+  margin: -8px -16px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.big-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.big-card:active {
+  transform: scale(0.98);
+}
+
+.card-icon { font-size: 28px; }
+.card-title { font-size: 17px; font-weight: 700; color: var(--navy); }
+.card-desc { font-size: 13px; color: var(--muted); }
+
+/* LIST */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.list-item strong { display: block; font-size: 15px; }
+.list-item span { font-size: 13px; color: var(--muted); }
+
+/* BUTTONS */
+.primary-btn, .secondary-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.primary-btn {
+  background: var(--blue);
+  color: white;
+}
+
+.primary-btn:active { opacity: 0.85; }
+
+.primary-btn.small {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.secondary-btn {
+  background: white;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+}
+
+/* FORM */
+#inspection-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.section legend {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  padding: 0 6px;
+  margin-bottom: 12px;
+}
+
+.req { color: var(--red); }
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.row.three { grid-template-columns: 1fr 1fr 1fr; }
+.row.four { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  font-size: 16px; /* prevents zoom on iOS */
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 500;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(41,128,185,0.15);
+}
+
+input:invalid:not(:placeholder-shown),
+select:invalid:not([value=""]) {
+  border-color: #f5c6cb;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.group-label {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.check input { width: auto; }
+
+.inline-input {
+  width: 120px !important;
+  margin-left: 6px;
+  padding: 6px 8px !important;
+  font-size: 14px !important;
+}
+
+/* Pass / Fail grid */
+.pass-fail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.pf-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pf-item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.pf-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pf-btns label {
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pf-btns input { width: auto; }
+
+/* Brake grid */
+.brake-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.brake-col {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.brake-col strong { font-size: 14px; color: var(--navy); }
+.brake-col select,
+.brake-col input { width: 100%; text-align: center; }
+
+.legend {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.legend .ok { color: var(--green); font-weight: 600; }
+.legend .sug { color: var(--orange); font-weight: 600; }
+.legend .req-leg { color: var(--red); font-weight: 600; }
+
+h3 {
+  font-size: 14px;
+  color: var(--navy);
+  margin: 12px 0 8px;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  position: sticky;
+  bottom: 0;
+  background: var(--bg);
+  padding: 12px 0;
+  z-index: 40;
+}
+
+.form-actions button { flex: 1; }
+
+.error-banner {
+  background: #FDECEA;
+  color: var(--red);
+  border: 1px solid #F5C6CB;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hidden { display: none !important; }
+
+/* Progress */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+}
+
+#progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 4px;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+#progress-bar::after {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--pct, 0%);
+  background: var(--green);
+  transition: width 0.3s;
+}
+
+#progress-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 32px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 200;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Responsive tweaks for smaller tablets / phones */
+@media (max-width: 600px) {
+  .row, .row.three, .row.four { grid-template-columns: 1fr 1fr; }
+  .pass-fail-grid { grid-template-columns: 1fr; }
+  .brake-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== Photos ===== */
+.optional { color: var(--muted); font-weight: 500; font-size: 13px; }
+.hint { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+
+.photo-actions { margin-bottom: 12px; }
+
+.photo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.photo-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-thumb .remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.65);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* History item actions */
+.list-item .actions {
+  display: flex;
+  gap: 8px;
+}
+
+.list-item .actions button {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.list-item .actions .btn-view { color: var(--blue); }
+.list-item .actions .btn-print { color: var(--green); }
+
+/* Print styles */
+@media print {
+  .app-header, .screen-header, .form-actions, .back-btn, #btn-home, .photo-btn {
+    display: none !important;
+  }
+  .screen { display: block !important; padding: 0; }
+  .section { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+}
+
+/* ===== Finance / 2026 ===== */
+.finance-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.finance-card.highlight {
+  background: linear-gradient(135deg, #0D2137, #1B4F72);
+  color: white;
+  border: none;
+}
+.fin-label {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.fin-big {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.fin-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.finance-card.highlight .fin-value,
+.finance-card.highlight .fin-big {
+  color: white;
+}
+.fin-sub {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+.fin-section-title {
+  font-size: 15px;
+  color: var(--navy);
+  margin: 20px 0 10px;
+}
+.cost-table {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.cost-row:last-child { border-bottom: none; }
+.cost-row.total {
+  font-weight: 700;
+  background: #f8fafc;
+}
+.cost-row.profit {
+  font-weight: 700;
+  background: #e8f5e9;
+  color: var(--green);
+}
+.fin-assumptions {
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 18px;
+  line-height: 1.6;
+}
+.fin-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 16px;
+  font-style: italic;
+}
+
+
+/* VIN Scan Modal */
+.modal {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.modal.hidden { display: none !important; }
+.modal-card {
+  background: #fff; border-radius: 14px; width: 100%; max-width: 420px;
+  padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; font-size: 17px; color: #0D2137;
+}
+.modal-hint { font-size: 13px; color: #666; margin-bottom: 12px; }
+.scan-video-wrap {
+  background: #111; border-radius: 10px; overflow: hidden;
+  aspect-ratio: 4/3; margin-bottom: 10px;
+}
+#vin-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.scan-status { font-size: 13px; color: #1B4F72; font-weight: 600; min-height: 20px; margin-bottom: 10px; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions button { flex: 1; }
+
+</style>
+</head>
+<body>
+  <noscript style="display:block;padding:20px;background:#fee;color:#900;font-family:sans-serif">JavaScript is required. Open this file in <b>Safari</b> (not the Files preview). Tap Share → Open in Safari.</noscript>
+  <!-- APP SHELL -->
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">M</div>
+        <div class="brand-text">
+          <strong>M Oil LLC</strong>
+          <span>Vehicle Maintenance Delivered</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="js-status" style="font-size:11px;opacity:0.7;margin-right:8px">…</span>
+        <button id="btn-home" class="icon-btn" title="Home">⌂</button>
+      </div>
+    </header>
+
+    <!-- SCREENS -->
+    <main id="main">
+
+      <!-- HOME / DASHBOARD -->
+      <section id="screen-home" class="screen active">
+        <h1>Field Inspections</h1>
+        <p class="subtitle">Select a company or start a new inspection</p>
+
+        <div class="card-grid">
+          <button class="big-card" data-action="new-inspection">
+            <span class="card-icon">📋</span>
+            <span class="card-title">New Inspection</span>
+            <span class="card-desc">Start a full mandatory inspection</span>
+          </button>
+          <button class="big-card" data-action="companies">
+            <span class="card-icon">🏢</span>
+            <span class="card-title">Companies</span>
+            <span class="card-desc">Manage customers & vehicles</span>
+          </button>
+          <button class="big-card" data-action="history">
+            <span class="card-icon">🕑</span>
+            <span class="card-title">Recent History</span>
+            <span class="card-desc">View past inspections</span>
+          </button>
+          <button class="big-card" data-action="finance">
+            <span class="card-icon">💰</span>
+            <span class="card-title">M Oil 2026 Finance</span>
+            <span class="card-desc">Costs, profit & monthly estimate</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- COMPANIES -->
+      <section id="screen-companies" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" data-back="home">← Back</button>
+          <h2>Companies</h2>
+          <button class="primary-btn small" id="btn-add-company">+ Add</button>
+        </div>
+        <div id="company-list" class="list"></div>
+      </section>
+
+      <!-- VEHICLES -->
+      <section id="screen-vehicles" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" data-back="companies">← Back</button>
+          <h2 id="vehicles-title">Vehicles</h2>
+          <button class="primary-btn small" id="btn-add-vehicle">+ Add</button>
+        </div>
+        <div id="vehicle-list" class="list"></div>
+      </section>
+
+      <!-- HISTORY -->
+      <section id="screen-history" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" data-back="home">← Back</button>
+          <h2>Recent Inspections</h2>
+        </div>
+        <div id="history-list" class="list"></div>
+      </section>
+
+      <!-- INSPECTION FORM -->
+      <section id="screen-inspection" class="screen">
+        <div class="screen-header sticky">
+          <button class="back-btn" data-back="home">← Back</button>
+          <h2>Inspection</h2>
+          <div class="progress-wrap">
+            <div id="progress-bar"></div>
+            <span id="progress-text">0%</span>
+          </div>
+        </div>
+
+        <form id="inspection-form" novalidate>
+
+          <!-- 1. TECHNICIAN -->
+          <fieldset class="section" data-section="tech">
+            <legend>1. Technician Information <span class="req">*</span></legend>
+
+            <div class="row">
+              <label>Technician Name <span class="req">*</span>
+                <input type="text" name="techName" required placeholder="Full name" />
+              </label>
+              <label>Technician Phone <span class="req">*</span>
+                <input type="tel" name="techPhone" required placeholder="512-xxx-xxxx" />
+              </label>
+            </div>
+
+            <div class="row">
+              <label>Date <span class="req">*</span>
+                <input type="date" name="date" required />
+              </label>
+              <label>Time In <span class="req">*</span>
+                <input type="time" name="timeIn" required />
+              </label>
+            </div>
+
+            <div class="row">
+              <label>Time Out <span class="req">*</span>
+                <input type="time" name="timeOut" required />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 2. CUSTOMER -->
+          <fieldset class="section" data-section="customer">
+            <legend>2. Customer Information <span class="req">*</span></legend>
+
+            <div class="row">
+              <label>Customer / Company <span class="req">*</span>
+                <input type="text" name="customer" required placeholder="Hensel Phelps" />
+              </label>
+              <label>Unit Number <span class="req">*</span>
+                <input type="text" name="hpNumber" required placeholder="e.g. 203-2600" />
+              </label>
+            </div>
+
+            <div class="checkbox-group">
+              <span class="group-label">Type of Service Performed <span class="req">*</span></span>
+              <label class="check"><input type="checkbox" name="serviceType" value="Oil Change" /> Oil Change</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Tire Rotation" /> Tire Rotation</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Brake Repair" /> Brake Repair</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Air Filter" /> Air Filter Replaced</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Cabin Filter" /> Cabin Air Filter Replaced</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Wipers" /> Wiper Blades Replaced</label>
+              <label class="check"><input type="checkbox" name="serviceType" value="Other" /> Other
+                <input type="text" name="serviceOther" placeholder="Describe..." class="inline-input" />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 3. VEHICLE -->
+          <fieldset class="section" data-section="vehicle">
+            <legend>3. Vehicle Information <span class="req">*</span></legend>
+
+            <label>VIN <span class="req">*</span>
+              <input type="text" name="vin" required maxlength="17" placeholder="17-character VIN" style="text-transform:uppercase" />
+            </label>
+            <div class="row" style="margin-top:8px;margin-bottom:12px">
+              <button type="button" id="btn-scan-vin" class="secondary-btn">📷 Scan VIN</button>
+              <button type="button" id="btn-decode-vin" class="secondary-btn">Decode VIN</button>
+            </div>
+
+            <div class="row">
+              <label>Year <span class="req">*</span>
+                <input type="text" name="year" required placeholder="2026" />
+              </label>
+              <label>Make <span class="req">*</span>
+                <input type="text" name="make" required placeholder="GMC" />
+              </label>
+            </div>
+            <div class="row">
+              <label>Model <span class="req">*</span>
+                <input type="text" name="model" required placeholder="Sierra 1500" />
+              </label>
+              <label>Engine <span class="req">*</span>
+                <input type="text" name="engine" required placeholder="2.7L Turbo" />
+              </label>
+            </div>
+
+            <div class="row">
+              <label>License Plate <span class="req">*</span>
+                <input type="text" name="licensePlate" required placeholder="XJP-8282" />
+              </label>
+            </div>
+
+            <div class="row">
+              <label>Mileage In <span class="req">*</span>
+                <input type="number" name="mileageIn" required placeholder="e.g. 16235" />
+              </label>
+              <label>Mileage Out <span class="req">*</span>
+                <input type="number" name="mileageOut" required placeholder="e.g. 16235" />
+              </label>
+            </div>
+
+            <div class="row">
+              <label>Next Service Mileage <span class="req">*</span>
+                <input type="number" name="nextService" required placeholder="e.g. 21235" />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 3. SAFETY -->
+          <fieldset class="section" data-section="safety">
+            <legend>4. Safety & Warning Indicators <span class="req">*</span></legend>
+
+            <div class="row">
+              <label>Body Damage Noted <span class="req">*</span>
+                <select name="bodyDamage" required>
+                  <option value="">Select...</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </label>
+              <label>OBD Codes Present <span class="req">*</span>
+                <select name="obdPresent" required>
+                  <option value="">Select...</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </label>
+            </div>
+            <label>OBD Codes (if any)
+              <input type="text" name="obdCodes" placeholder="List codes..." />
+            </label>
+
+            <label>Maintenance Indicator Reset <span class="req">*</span>
+              <select name="maintReset" required>
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </label>
+
+            <div class="checkbox-group">
+              <span class="group-label">Warning Dash Lights <span class="req">*</span></span>
+              <label class="check"><input type="checkbox" name="dashLights" value="None" /> None</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="TPMS" /> TPMS</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="ABS" /> ABS</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="TRAC" /> TRAC</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="Low Oil" /> Low Oil</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="Battery" /> Battery</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="Air Bag" /> Air Bag</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="Check Engine" /> Check Engine</label>
+              <label class="check"><input type="checkbox" name="dashLights" value="Other" /> Other
+                <input type="text" name="dashOther" class="inline-input" placeholder="Specify..." />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 4. SYSTEMS -->
+          <fieldset class="section" data-section="systems">
+            <legend>5. Systems Inspection <span class="req">*</span></legend>
+
+            <div class="pass-fail-grid">
+              <div class="pf-item">
+                <span>Controls</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="controls" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="controls" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Horn</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="horn" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="horn" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Lights</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="lights" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="lights" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Mirrors</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="mirrors" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="mirrors" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Belts</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="belts" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="belts" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Door Locks / Weather Strips</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="doorLocks" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="doorLocks" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Steering & Alignment</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="steering" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="steering" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Hoses Check</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="hoses" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="hoses" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Fluid Leak – Undercarriage</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="fluidLeak" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="fluidLeak" value="Fail" /> Fail</label>
+                </div>
+              </div>
+              <div class="pf-item">
+                <span>Battery Check</span>
+                <div class="pf-btns">
+                  <label><input type="radio" name="battery" value="Pass" required /> Pass</label>
+                  <label><input type="radio" name="battery" value="Fail" /> Fail</label>
+                  <label><input type="radio" name="battery" value="Replace" /> Replace</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row three">
+              <label>Wiper Blades <span class="req">*</span>
+                <select name="wipers" required>
+                  <option value="">Select...</option>
+                  <option value="Replaced">Replaced</option>
+                  <option value="Not Replaced">Not Replaced</option>
+                </select>
+              </label>
+              <label>Air Filter <span class="req">*</span>
+                <select name="airFilter" required>
+                  <option value="">Select...</option>
+                  <option value="Replaced">Replaced</option>
+                  <option value="Not Replaced">Not Replaced</option>
+                </select>
+              </label>
+              <label>Cabin Air Filter <span class="req">*</span>
+                <select name="cabinFilter" required>
+                  <option value="">Select...</option>
+                  <option value="Replaced">Replaced</option>
+                  <option value="Not Replaced">Not Replaced</option>
+                  <option value="N/A">N/A</option>
+                </select>
+              </label>
+            </div>
+            <div class="row three">
+              <label>Wiper Blades Date
+                <input type="date" name="wiperDate" />
+              </label>
+              <label>Air Filter Date
+                <input type="date" name="airFilterDate" />
+              </label>
+              <label>Cabin Filter Date
+                <input type="date" name="cabinFilterDate" />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 5. FLUIDS -->
+          <fieldset class="section" data-section="fluids">
+            <legend>6. Fluid Levels <span class="req">*</span></legend>
+
+            <div class="row four">
+              <label>Oil Level <span class="req">*</span>
+                <select name="oilLevel" required>
+                  <option value="">Select...</option>
+                  <option value="Low">Low</option>
+                  <option value="Mid">Mid</option>
+                  <option value="Norm">Norm</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+              <label>Power Steering <span class="req">*</span>
+                <select name="psLevel" required>
+                  <option value="">Select...</option>
+                  <option value="Electric">Electric</option>
+                  <option value="Low">Low</option>
+                  <option value="Mid">Mid</option>
+                  <option value="Norm">Norm</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+              <label>Brake Fluid <span class="req">*</span>
+                <select name="brakeFluid" required>
+                  <option value="">Select...</option>
+                  <option value="Low">Low</option>
+                  <option value="Mid">Mid</option>
+                  <option value="Norm">Norm</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+              <label>Coolant Level <span class="req">*</span>
+                <select name="coolant" required>
+                  <option value="">Select...</option>
+                  <option value="Low">Low</option>
+                  <option value="Mid">Mid</option>
+                  <option value="Norm">Norm</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+            </div>
+
+            <label>Greased <span class="req">*</span>
+              <select name="greased" required>
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <!-- 6. TIRES & BRAKES -->
+          <fieldset class="section" data-section="tires">
+            <legend>7. Tires & Brakes <span class="req">*</span></legend>
+
+            <h3>Tire Tread Depth (32nds)</h3>
+            <div class="row four">
+              <label>FL <span class="req">*</span>
+                <input type="number" name="treadFL" required min="0" max="32" step="1" placeholder="/32" />
+              </label>
+              <label>FR <span class="req">*</span>
+                <input type="number" name="treadFR" required min="0" max="32" step="1" placeholder="/32" />
+              </label>
+              <label>RL <span class="req">*</span>
+                <input type="number" name="treadRL" required min="0" max="32" step="1" placeholder="/32" />
+              </label>
+              <label>RR <span class="req">*</span>
+                <input type="number" name="treadRR" required min="0" max="32" step="1" placeholder="/32" />
+              </label>
+            </div>
+
+            <h3>Tire Pressure (PSI)</h3>
+            <div class="row">
+              <label>Recommended Front
+                <input type="number" name="recFront" placeholder="e.g. 36" />
+              </label>
+              <label>Recommended Rear
+                <input type="number" name="recRear" placeholder="e.g. 36" />
+              </label>
+            </div>
+            <div class="row four">
+              <label>FL Actual <span class="req">*</span>
+                <input type="number" name="psiFL" required placeholder="PSI" />
+              </label>
+              <label>FR Actual <span class="req">*</span>
+                <input type="number" name="psiFR" required placeholder="PSI" />
+              </label>
+              <label>RL Actual <span class="req">*</span>
+                <input type="number" name="psiRL" required placeholder="PSI" />
+              </label>
+              <label>RR Actual <span class="req">*</span>
+                <input type="number" name="psiRR" required placeholder="PSI" />
+              </label>
+            </div>
+
+            <h3>Brake Pads</h3>
+            <div class="brake-grid">
+              <div class="brake-col">
+                <strong>FL</strong>
+                <select name="brakeVisFL" required>
+                  <option value="">Visual...</option>
+                  <option value="OK">OK</option>
+                  <option value="SUG">SUG</option>
+                  <option value="REQ">REQ</option>
+                </select>
+                <input type="number" name="brakeMmFL" required placeholder="mm" step="0.1" />
+              </div>
+              <div class="brake-col">
+                <strong>FR</strong>
+                <select name="brakeVisFR" required>
+                  <option value="">Visual...</option>
+                  <option value="OK">OK</option>
+                  <option value="SUG">SUG</option>
+                  <option value="REQ">REQ</option>
+                </select>
+                <input type="number" name="brakeMmFR" required placeholder="mm" step="0.1" />
+              </div>
+              <div class="brake-col">
+                <strong>RL</strong>
+                <select name="brakeVisRL" required>
+                  <option value="">Visual...</option>
+                  <option value="OK">OK</option>
+                  <option value="SUG">SUG</option>
+                  <option value="REQ">REQ</option>
+                </select>
+                <input type="number" name="brakeMmRL" required placeholder="mm" step="0.1" />
+              </div>
+              <div class="brake-col">
+                <strong>RR</strong>
+                <select name="brakeVisRR" required>
+                  <option value="">Visual...</option>
+                  <option value="OK">OK</option>
+                  <option value="SUG">SUG</option>
+                  <option value="REQ">REQ</option>
+                </select>
+                <input type="number" name="brakeMmRR" required placeholder="mm" step="0.1" />
+              </div>
+            </div>
+            <div class="legend">
+              <span class="ok">OK = Acceptable</span>
+              <span class="sug">SUG = Suggested</span>
+              <span class="req-leg">REQ = Required</span>
+            </div>
+          </fieldset>
+
+          
+          <!-- 6b. PHOTOS -->
+          <fieldset class="section" data-section="photos">
+            <legend>Photos <span class="optional">(Recommended)</span></legend>
+            <p class="hint">Take photos of brakes, tires, damage, oil condition, etc.</p>
+            <div class="photo-actions">
+              <label class="photo-btn">
+                📷 Take / Upload Photo
+                <input type="file" id="photo-input" accept="image/*" capture="environment" multiple hidden />
+              </label>
+            </div>
+            <div id="photo-preview" class="photo-grid"></div>
+          </fieldset>
+
+          <!-- 7. NOTES -->
+          <fieldset class="section" data-section="notes">
+            <legend>8. Technician Notes <span class="req">*</span></legend>
+            <label>
+              <textarea name="techNotes" required rows="4" placeholder="Write notes here. Type 'None' if nothing to report."></textarea>
+            </label>
+          </fieldset>
+
+          <!-- ACTIONS -->
+          <div class="form-actions">
+            <button type="button" id="btn-save-draft" class="secondary-btn">Save Draft</button>
+            <button type="submit" id="btn-complete" class="primary-btn">Complete Inspection</button>
+          </div>
+
+          <div id="form-error" class="error-banner hidden"></div>
+        </form>
+      </section>
+
+
+      <!-- FINANCE / 2026 -->
+      <section id="screen-finance" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" data-back="home">← Back</button>
+          <h2>M Oil 2026 Finance</h2>
+        </div>
+
+        <div class="finance-card highlight">
+          <div class="fin-label">6-Quart Oil Change Profit</div>
+          <div class="fin-big">≈ $82.83</div>
+          <div class="fin-sub">Charge $135 • Cost ≈ $52.17</div>
+        </div>
+
+        <div class="finance-card highlight" style="background:linear-gradient(135deg,#1B4F72,#2980B9);margin-top:10px">
+          <div class="fin-label">12-Quart Oil Change Profit</div>
+          <div class="fin-big">≈ $65.65</div>
+          <div class="fin-sub">At current $147.82 charge • Cost ≈ $82.17</div>
+        </div>
+
+        <div class="finance-card" style="border:2px solid #1E7E34">
+          <div class="fin-label">Recommended 12-Quart Price (same profit as 6-qt)</div>
+          <div class="fin-value" style="color:#1E7E34">$165.00</div>
+          <div class="fin-sub">+$17.18 vs current • Matches ~$83 profit target</div>
+        </div>
+
+        <div class="finance-card">
+          <div class="fin-label">Monthly Gross Profit (60 × 6-qt @ $135)</div>
+          <div class="fin-value">≈ $4,970</div>
+        </div>
+
+        <div class="finance-card">
+          <div class="fin-label">Estimated Monthly Net Income</div>
+          <div class="fin-value">$3,000 – $4,000+</div>
+          <div class="fin-sub">After expenses &amp; tax set-aside</div>
+        </div>
+
+        <h3 class="fin-section-title">Cost Breakdown — 6-Quart @ $135</h3>
+        <div class="cost-table">
+          <div class="cost-row"><span>Oil (6 quarts)</span><span>$30.00</span></div>
+          <div class="cost-row"><span>Oil filter (avg)</span><span>$5.00</span></div>
+          <div class="cost-row"><span>Brake cleaner (½ can)</span><span>$1.43</span></div>
+          <div class="cost-row"><span>Paper towels</span><span>$0.24</span></div>
+          <div class="cost-row"><span>Insurance ($450 ÷ 60)</span><span>$7.50</span></div>
+          <div class="cost-row"><span>Gas (~30 mi @ 17 mpg)</span><span>$6.50</span></div>
+          <div class="cost-row"><span>Gloves / misc</span><span>$1.50</span></div>
+          <div class="cost-row total"><span>Total Cost</span><span>≈ $52.17</span></div>
+          <div class="cost-row profit"><span>Profit @ $135</span><span>≈ $82.83</span></div>
+        </div>
+
+        <h3 class="fin-section-title">Cost Breakdown — 12-Quart</h3>
+        <div class="cost-table">
+          <div class="cost-row"><span>Oil (12 quarts)</span><span>$60.00</span></div>
+          <div class="cost-row"><span>Oil filter (avg)</span><span>$5.00</span></div>
+          <div class="cost-row"><span>Brake cleaner (½ can)</span><span>$1.43</span></div>
+          <div class="cost-row"><span>Paper towels</span><span>$0.24</span></div>
+          <div class="cost-row"><span>Insurance ($450 ÷ 60)</span><span>$7.50</span></div>
+          <div class="cost-row"><span>Gas (~30 mi @ 17 mpg)</span><span>$6.50</span></div>
+          <div class="cost-row"><span>Gloves / misc</span><span>$1.50</span></div>
+          <div class="cost-row total"><span>Total Cost</span><span>≈ $82.17</span></div>
+          <div class="cost-row"><span>Profit @ current $147.82</span><span>≈ $65.65</span></div>
+          <div class="cost-row profit"><span>Profit @ recommended $165</span><span>≈ $82.83</span></div>
+        </div>
+
+        <h3 class="fin-section-title">Price Comparison</h3>
+        <div class="cost-table">
+          <div class="cost-row"><span>6-quart charge</span><span>$135.00</span></div>
+          <div class="cost-row"><span>12-quart current charge</span><span>$147.82</span></div>
+          <div class="cost-row profit"><span>12-quart recommended charge</span><span>$165.00</span></div>
+          <div class="cost-row"><span>Extra oil cost (6 more quarts)</span><span>$30.00</span></div>
+        </div>
+
+        <h3 class="fin-section-title">Assumptions</h3>
+        <ul class="fin-assumptions">
+          <li>60 oil changes per month</li>
+          <li>$135 charged per 6-quart oil change</li>
+          <li>$147.82 current charge for 12-quart</li>
+          <li>$165 recommended for 12-quart (same profit as 6-qt)</li>
+          <li>$120 per 6-gallon box of oil (24 quarts = $5/qt)</li>
+          <li>Insurance $450/month</li>
+          <li>Gas $3.99/gal • 17 MPG • ~30 miles/job</li>
+          <li>Net income range includes ~25–30% tax set-aside</li>
+        </ul>
+
+        <p class="fin-note">This is a planning estimate. Actual results will vary with miles, filter prices, and additional brake/other work.</p>
+      </section>
+
+    </main>
+  </div>
+
+
+  <!-- VIN SCAN MODAL -->
+  <div id="vin-scan-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong>Scan VIN</strong>
+        <button type="button" id="btn-close-scan" class="icon-btn" style="color:#333;font-size:22px">×</button>
+      </div>
+      <p class="modal-hint">Point camera at the VIN sticker (door jamb or dash). Hold steady in good light.</p>
+      <div class="scan-video-wrap">
+        <video id="vin-video" playsinline autoplay muted></video>
+        <canvas id="vin-canvas" class="hidden"></canvas>
+      </div>
+      <p id="scan-status" class="scan-status">Camera starting…</p>
+      <div class="modal-actions">
+        <button type="button" id="btn-capture-vin" class="primary-btn">Capture &amp; Read</button>
+        <button type="button" id="btn-cancel-scan" class="secondary-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script>
+/* M Oil LLC Inspection App v3 - local file safe */
+(function () {
+  "use strict";
+  var STORAGE_KEY = "moil_inspections_v3";
+  var COMPANIES_KEY = "moil_companies_v3";
+  var photoDataUrls = [];
+  var viewingInspectionId = null;
+  var currentCompanyId = null;
+
+  function $(id) { return document.getElementById(id); }
+  function qsa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  function toast(msg) {
+    var t = $("toast");
+    if (!t) { try { alert(msg); } catch(e) {} return; }
+    t.textContent = msg;
+    t.classList.remove("hidden");
+    clearTimeout(t._tm);
+    t._tm = setTimeout(function () { t.classList.add("hidden"); }, 2800);
+  }
+
+  function showScreen(name) {
+    qsa(".screen").forEach(function (s) { s.classList.remove("active"); });
+    var el = $("screen-" + name);
+    if (el) el.classList.add("active");
+    try { window.scrollTo(0, 0); } catch(e) {}
+  }
+
+  function getJSON(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) { return fallback; }
+  }
+  function setJSON(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); }
+    catch (e) { toast("Storage blocked"); }
+  }
+  function getInspections() { return getJSON(STORAGE_KEY, []); }
+  function saveInspections(list) { setJSON(STORAGE_KEY, list); }
+  function getCompanies() { return getJSON(COMPANIES_KEY, []); }
+  function saveCompanies(list) { setJSON(COMPANIES_KEY, list); }
+
+  function escapeHtml(s) {
+    if (!s) return "";
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  function bindNav() {
+    qsa("[data-action]").forEach(function (btn) {
+      btn.onclick = function () {
+        var a = btn.getAttribute("data-action");
+        if (a === "new-inspection") {
+          viewingInspectionId = null;
+          resetForm(true);
+          showScreen("inspection");
+          updateProgress();
+        } else if (a === "companies") {
+          renderCompanies();
+          showScreen("companies");
+        } else if (a === "history") {
+          renderHistory();
+          showScreen("history");
+        } else if (a === "finance") {
+          showScreen("finance");
+        }
+      };
+    });
+    qsa("[data-back]").forEach(function (btn) {
+      btn.onclick = function () { showScreen(btn.getAttribute("data-back")); };
+    });
+    var homeBtn = $("btn-home");
+    if (homeBtn) homeBtn.onclick = function () { showScreen("home"); };
+  }
+
+  function renderCompanies() {
+    var list = $("company-list");
+    if (!list) return;
+    var companies = getCompanies();
+    if (!companies.length) {
+      list.innerHTML = '<div class="list-item"><span>No companies yet. Tap + Add</span></div>';
+      return;
+    }
+    list.innerHTML = companies.map(function (c) {
+      return '<div class="list-item" data-company="' + c.id + '"><div><strong>' +
+        escapeHtml(c.name) + '</strong><span>' + ((c.vehicles && c.vehicles.length) || 0) +
+        ' vehicle(s)</span></div><span>&rarr;</span></div>';
+    }).join("");
+    qsa("[data-company]", list).forEach(function (el) {
+      el.onclick = function () {
+        currentCompanyId = el.getAttribute("data-company");
+        renderVehicles(currentCompanyId);
+        showScreen("vehicles");
+      };
+    });
+  }
+
+  function bindCompanyButtons() {
+    var addBtn = $("btn-add-company");
+    if (!addBtn) return;
+    addBtn.onclick = function () {
+      var name = prompt("Company name:");
+      if (!name || !String(name).trim()) return;
+      var companies = getCompanies();
+      companies.push({ id: String(Date.now()), name: String(name).trim(), vehicles: [] });
+      saveCompanies(companies);
+      renderCompanies();
+      toast("Company added");
+    };
+  }
+
+  function renderVehicles(companyId) {
+    var companies = getCompanies();
+    var company = null;
+    for (var i = 0; i < companies.length; i++) {
+      if (companies[i].id === companyId) { company = companies[i]; break; }
+    }
+    if (!company) return;
+    var title = $("vehicles-title");
+    if (title) title.textContent = company.name;
+    var list = $("vehicle-list");
+    if (!list) return;
+    if (!company.vehicles || !company.vehicles.length) {
+      list.innerHTML = '<div class="list-item"><span>No vehicles yet. Tap + Add</span></div>';
+      return;
+    }
+    list.innerHTML = company.vehicles.map(function (v) {
+      return '<div class="list-item" data-vin="' + escapeHtml(v.vin) + '"><div><strong>' +
+        escapeHtml(v.year) + " " + escapeHtml(v.make) + " " + escapeHtml(v.model) +
+        '</strong><span>' + escapeHtml(v.vin) + " &bull; " + escapeHtml(v.plate || "No plate") +
+        '</span></div><span>&rarr;</span></div>';
+    }).join("");
+    qsa("[data-vin]", list).forEach(function (el) {
+      el.onclick = function () {
+        var vin = el.getAttribute("data-vin");
+        var v = null;
+        for (var j = 0; j < company.vehicles.length; j++) {
+          if (company.vehicles[j].vin === vin) { v = company.vehicles[j]; break; }
+        }
+        if (!v) return;
+        viewingInspectionId = null;
+        resetForm(true);
+        var form = $("inspection-form");
+        if (!form) return;
+        form.vin.value = v.vin || "";
+        form.year.value = v.year || "";
+        form.make.value = v.make || "";
+        form.model.value = v.model || "";
+        form.engine.value = v.engine || "";
+        form.licensePlate.value = v.plate || "";
+        form.customer.value = company.name;
+        showScreen("inspection");
+        updateProgress();
+      };
+    });
+  }
+
+  function bindVehicleButtons() {
+    var addBtn = $("btn-add-vehicle");
+    if (!addBtn) return;
+    addBtn.onclick = function () {
+      if (!currentCompanyId) { toast("Select a company first"); return; }
+      var vin = prompt("VIN (17 characters):");
+      if (!vin) return;
+      var year = prompt("Year:") || "";
+      var make = prompt("Make:") || "";
+      var model = prompt("Model:") || "";
+      var plate = prompt("License Plate:") || "";
+      var companies = getCompanies();
+      var company = null;
+      for (var i = 0; i < companies.length; i++) {
+        if (companies[i].id === currentCompanyId) { company = companies[i]; break; }
+      }
+      if (!company) return;
+      if (!company.vehicles) company.vehicles = [];
+      company.vehicles.push({
+        vin: String(vin).toUpperCase().trim(),
+        year: year, make: make, model: model, plate: plate, engine: ""
+      });
+      saveCompanies(companies);
+      renderVehicles(currentCompanyId);
+      toast("Vehicle added");
+    };
+  }
+
+  function renderHistory() {
+    var list = $("history-list");
+    if (!list) return;
+    var inspections = getInspections().slice().reverse();
+    if (!inspections.length) {
+      list.innerHTML = '<div class="list-item"><span>No inspections saved yet</span></div>';
+      return;
+    }
+    list.innerHTML = inspections.slice(0, 40).map(function (ins) {
+      return '<div class="list-item"><div><strong>' + escapeHtml(ins.customer || "Unknown") +
+        " &bull; " + escapeHtml(ins.year || "") + " " + escapeHtml(ins.make || "") + " " + escapeHtml(ins.model || "") +
+        '</strong><span>' + escapeHtml(ins.date || "") + " &bull; " + escapeHtml(ins.techName || "") +
+        " &bull; <b>" + escapeHtml(ins.status || "Draft") + '</b></span></div><div class="actions">' +
+        '<button type="button" class="btn-view" data-id="' + ins.id + '">View</button> ' +
+        '<button type="button" class="btn-print" data-id="' + ins.id + '">Print</button></div></div>';
+    }).join("");
+    qsa(".btn-view", list).forEach(function (btn) {
+      btn.onclick = function (e) { e.stopPropagation(); openInspection(btn.getAttribute("data-id")); };
+    });
+    qsa(".btn-print", list).forEach(function (btn) {
+      btn.onclick = function (e) { e.stopPropagation(); printInspection(btn.getAttribute("data-id")); };
+    });
+  }
+
+  function openInspection(id) {
+    var list = getInspections();
+    var ins = null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) { ins = list[i]; break; }
+    }
+    if (!ins) { toast("Not found"); return; }
+    viewingInspectionId = id;
+    resetForm(false);
+    fillForm(ins);
+    photoDataUrls = ins.photos || [];
+    renderPhotoPreviews();
+    showScreen("inspection");
+    updateProgress();
+    toast(ins.status === "Complete" ? "Viewing completed" : "Editing draft");
+  }
+
+  function resetForm(clearPhotos) {
+    var form = $("inspection-form");
+    if (!form) return;
+    form.reset();
+    try { form.date.value = new Date().toISOString().split("T")[0]; } catch (e) {}
+    var err = $("form-error");
+    if (err) err.classList.add("hidden");
+    if (clearPhotos !== false) {
+      photoDataUrls = [];
+      renderPhotoPreviews();
+    }
+    updateProgress();
+  }
+
+  function fillForm(data) {
+    var form = $("inspection-form");
+    if (!form || !data) return;
+    function setVal(name, val) {
+      if (val == null) return;
+      var els = form.elements[name];
+      if (!els) return;
+      if (els.length && els[0] && els[0].type === "radio") {
+        for (var i = 0; i < els.length; i++) {
+          if (els[i].value === String(val)) { els[i].checked = true; break; }
+        }
+      } else if (els.type !== "checkbox") {
+        els.value = val;
+      }
+    }
+    var keys = ["techName","techPhone","date","hpNumber","timeIn","timeOut","mileageIn","mileageOut","nextService","customer","licensePlate","vin","year","make","model","engine","bodyDamage","obdPresent","obdCodes","maintReset","dashOther","wipers","wiperDate","airFilter","cabinFilter","airFilterDate","cabinFilterDate","oilLevel","psLevel","brakeFluid","coolant","greased","treadFL","treadFR","treadRL","treadRR","recFront","recRear","psiFL","psiFR","psiRL","psiRR","brakeVisFL","brakeVisFR","brakeVisRL","brakeVisRR","brakeMmFL","brakeMmFR","brakeMmRL","brakeMmRR","techNotes","serviceOther","controls","horn","lights","mirrors","belts","doorLocks","steering","hoses","fluidLeak","battery"];
+    keys.forEach(function (k) { setVal(k, data[k]); });
+    if (Array.isArray(data.serviceType)) {
+      data.serviceType.forEach(function (v) {
+        var cb = form.querySelector('input[name="serviceType"][value="' + v + '"]');
+        if (cb) cb.checked = true;
+      });
+    }
+    if (Array.isArray(data.dashLights)) {
+      data.dashLights.forEach(function (v) {
+        var cb = form.querySelector('input[name="dashLights"][value="' + v + '"]');
+        if (cb) cb.checked = true;
+      });
+    }
+  }
+
+  function getFormData() {
+    var form = $("inspection-form");
+    var data = {};
+    if (!form) return data;
+    var elements = form.elements;
+    for (var i = 0; i < elements.length; i++) {
+      var el = elements[i];
+      if (!el.name || el.type === "checkbox") continue;
+      if (el.type === "radio") {
+        if (el.checked) data[el.name] = el.value;
+        continue;
+      }
+      data[el.name] = el.value;
+    }
+    data.serviceType = qsa('[name="serviceType"]:checked', form).map(function (c) { return c.value; });
+    data.dashLights = qsa('[name="dashLights"]:checked', form).map(function (c) { return c.value; });
+    data.photos = photoDataUrls.slice();
+    return data;
+  }
+
+  function validateForm() {
+    var form = $("inspection-form");
+    var errorBox = $("form-error");
+    if (!form) return false;
+    if (!form.checkValidity()) {
+      try { form.reportValidity(); } catch (e) {}
+      if (errorBox) {
+        errorBox.textContent = "Please complete all required fields marked with *";
+        errorBox.classList.remove("hidden");
+      }
+      return false;
+    }
+    if (!qsa('[name="serviceType"]:checked', form).length) {
+      if (errorBox) { errorBox.textContent = "Select at least one Type of Service."; errorBox.classList.remove("hidden"); }
+      toast("Select at least one Type of Service");
+      return false;
+    }
+    if (!qsa('[name="dashLights"]:checked', form).length) {
+      if (errorBox) { errorBox.textContent = "Select Warning Dash Lights (or None)."; errorBox.classList.remove("hidden"); }
+      toast("Select Warning Dash Lights (or None)");
+      return false;
+    }
+    if (errorBox) errorBox.classList.add("hidden");
+    return true;
+  }
+
+  function updateProgress() {
+    var form = $("inspection-form");
+    if (!form) return;
+    var required = qsa("[required]", form);
+    var filled = 0, seen = {};
+    required.forEach(function (el) {
+      if (el.type === "radio") {
+        if (seen[el.name]) return;
+        seen[el.name] = true;
+        if (form.querySelector('input[name="' + el.name + '"]:checked')) filled++;
+      } else if (el.value && String(el.value).trim() !== "") filled++;
+    });
+    var extra = 0;
+    if (qsa('[name="serviceType"]:checked', form).length) extra++;
+    if (qsa('[name="dashLights"]:checked', form).length) extra++;
+    var radioCount = Object.keys(seen).length;
+    var pct = Math.min(100, Math.round(((filled + extra) / (radioCount + 28)) * 100));
+    var bar = $("progress-bar");
+    var txt = $("progress-text");
+    if (bar) bar.style.setProperty("--pct", pct + "%");
+    if (txt) txt.textContent = pct + "%";
+  }
+
+  function saveRecord(status) {
+    var data = getFormData();
+    data.status = status;
+    data.savedAt = new Date().toISOString();
+    var list = getInspections();
+    if (viewingInspectionId) {
+      var found = false;
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].id === viewingInspectionId) {
+          data.id = viewingInspectionId;
+          list[i] = data;
+          found = true;
+          break;
+        }
+      }
+      if (!found) { data.id = String(Date.now()); list.push(data); }
+    } else {
+      data.id = String(Date.now());
+      list.push(data);
+    }
+    saveInspections(list);
+    viewingInspectionId = data.id;
+    return data;
+  }
+
+  function bindForm() {
+    var form = $("inspection-form");
+    if (!form) return;
+    form.addEventListener("input", updateProgress);
+    form.addEventListener("change", updateProgress);
+    var draftBtn = $("btn-save-draft");
+    if (draftBtn) {
+      draftBtn.onclick = function () {
+        saveRecord("Draft");
+        toast("Draft saved");
+      };
+    }
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      if (!validateForm()) {
+        toast("Complete all required fields");
+        return false;
+      }
+      saveRecord("Complete");
+      toast("Inspection completed");
+      setTimeout(function () {
+        showScreen("home");
+        resetForm(true);
+        viewingInspectionId = null;
+      }, 1100);
+      return false;
+    };
+    var decodeBtn = $("btn-decode-vin");
+    if (decodeBtn) {
+      decodeBtn.onclick = function () {
+        var formEl = $("inspection-form");
+        var vin = (formEl.vin.value || "").trim().toUpperCase();
+        if (vin.length !== 17) { toast("VIN must be 17 characters"); return; }
+        toast("Decoding VIN...");
+        if (typeof fetch !== "function") { toast("Needs modern browser"); return; }
+        fetch("https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/" + vin + "?format=json")
+          .then(function (r) { return r.json(); })
+          .then(function (json) {
+            var r = json.Results && json.Results[0];
+            if (r && String(r.ErrorCode) === "0") {
+              if (r.ModelYear) formEl.year.value = r.ModelYear;
+              if (r.Make) formEl.make.value = r.Make;
+              if (r.Model) formEl.model.value = r.Model;
+              var eng = [];
+              if (r.DisplacementL) eng.push(r.DisplacementL + "L");
+              if (r.FuelTypePrimary) eng.push(r.FuelTypePrimary);
+              if (eng.length) formEl.engine.value = eng.join(" ");
+              toast("VIN decoded");
+              updateProgress();
+            } else toast("Could not decode VIN");
+          })
+          .catch(function () { toast("Decode needs internet"); });
+      };
+    }
+  }
+
+  function renderPhotoPreviews() {
+    var grid = $("photo-preview");
+    if (!grid) return;
+    grid.innerHTML = photoDataUrls.map(function (src, i) {
+      return '<div class="photo-thumb"><img src="' + src + '" alt="Photo"/><button type="button" class="remove" data-idx="' + i + '">x</button></div>';
+    }).join("");
+    qsa(".remove", grid).forEach(function (btn) {
+      btn.onclick = function () {
+        photoDataUrls.splice(+btn.getAttribute("data-idx"), 1);
+        renderPhotoPreviews();
+      };
+    });
+  }
+
+  function bindPhotos() {
+    var input = $("photo-input");
+    if (!input) return;
+    input.onchange = function (e) {
+      var files = Array.prototype.slice.call((e.target && e.target.files) || []);
+      files.forEach(function (file) {
+        if (!file.type || file.type.indexOf("image/") !== 0) return;
+        if (photoDataUrls.length >= 12) { toast("Max 12 photos"); return; }
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          photoDataUrls.push(ev.target.result);
+          renderPhotoPreviews();
+          toast(photoDataUrls.length + " photo(s)");
+        };
+        reader.readAsDataURL(file);
+      });
+      input.value = "";
+    };
+  }
+
+  function printInspection(id) {
+    var list = getInspections();
+    var ins = null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) { ins = list[i]; break; }
+    }
+    if (!ins) { toast("Not found"); return; }
+    var win = window.open("", "_blank");
+    if (!win) { toast("Allow pop-ups"); return; }
+    var services = (ins.serviceType || []).join(", ") || "-";
+    win.document.write("<!DOCTYPE html><html><head><title>Inspection</title></head><body style='font-family:Arial;padding:20px'>" +
+      "<h1>M Oil LLC Inspection</h1>" +
+      "<p><b>" + escapeHtml(ins.customer) + "</b> - " + escapeHtml(ins.date) + " - " + escapeHtml(ins.status) + "</p>" +
+      "<p>" + escapeHtml(ins.year) + " " + escapeHtml(ins.make) + " " + escapeHtml(ins.model) + " VIN " + escapeHtml(ins.vin) + "</p>" +
+      "<p>Tech: " + escapeHtml(ins.techName) + " Services: " + escapeHtml(services) + "</p>" +
+      "<p>Notes: " + escapeHtml(ins.techNotes || "None") + "</p>" +
+      "<script>window.onload=function(){window.print()}<\/script></body></html>");
+    win.document.close();
+  }
+
+  function seed() {
+    if (!getCompanies().length) {
+      saveCompanies([{
+        id: "1",
+        name: "Hensel Phelps",
+        vehicles: [{
+          vin: "1GTPUAEK4TZ194292",
+          year: "2026",
+          make: "GMC",
+          model: "Sierra 1500",
+          engine: "2.7L Turbo",
+          plate: "XJP-8282"
+        }]
+      }]);
+    }
+  }
+
+
+  /* ---------- VIN Camera Scan ---------- */
+  var vinStream = null;
+
+  function loadTesseract(cb) {
+    if (window.Tesseract) { cb(); return; }
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+    s.onload = function () { cb(); };
+    s.onerror = function () { toast("Could not load scanner (needs internet first time)"); };
+    document.head.appendChild(s);
+  }
+
+  function extractVin(text) {
+    if (!text) return null;
+    var cleaned = text.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, " ");
+    // Prefer exact 17-char VIN (no I,O,Q)
+    var m = cleaned.match(/\b([A-HJ-NPR-Z0-9]{17})\b/);
+    if (m) return m[1];
+    // Fallback: longest sequence of valid chars near 17
+    var parts = cleaned.split(/\s+/);
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].length === 17) return parts[i];
+    }
+    // Concat nearby tokens
+    var joined = cleaned.replace(/\s+/g, "");
+    m = joined.match(/[A-HJ-NPR-Z0-9]{17}/);
+    return m ? m[0] : null;
+  }
+
+  function stopVinCamera() {
+    if (vinStream) {
+      vinStream.getTracks().forEach(function (t) { t.stop(); });
+      vinStream = null;
+    }
+    var video = $("vin-video");
+    if (video) video.srcObject = null;
+  }
+
+  function closeVinScan() {
+    stopVinCamera();
+    var modal = $("vin-scan-modal");
+    if (modal) modal.classList.add("hidden");
+  }
+
+  function openVinScan() {
+    var modal = $("vin-scan-modal");
+    var status = $("scan-status");
+    var video = $("vin-video");
+    if (!modal || !video) return;
+    modal.classList.remove("hidden");
+    if (status) status.textContent = "Starting camera…";
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      if (status) status.textContent = "Camera not supported on this device/browser";
+      toast("Camera not available");
+      return;
+    }
+
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
+    }).then(function (stream) {
+      vinStream = stream;
+      video.srcObject = stream;
+      video.play();
+      if (status) status.textContent = "Point at VIN, then tap Capture & Read";
+    }).catch(function (err) {
+      console.error(err);
+      if (status) status.textContent = "Camera permission denied or unavailable";
+      toast("Allow camera access to scan VIN");
+    });
+  }
+
+  function captureAndReadVin() {
+    var video = $("vin-video");
+    var canvas = $("vin-canvas");
+    var status = $("scan-status");
+    if (!video || !canvas) return;
+    if (!vinStream) {
+      toast("Camera not ready");
+      return;
+    }
+
+    var w = video.videoWidth || 640;
+    var h = video.videoHeight || 480;
+    canvas.width = w;
+    canvas.height = h;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, w, h);
+
+    if (status) status.textContent = "Reading VIN… (may take a few seconds)";
+    toast("Reading VIN…");
+
+    loadTesseract(function () {
+      Tesseract.recognize(canvas, "eng", {
+        tessedit_char_whitelist: "ABCDEFGHJKLMNPRSTUVWXYZ0123456789"
+      }).then(function (result) {
+        var text = (result && result.data && result.data.text) || "";
+        var vin = extractVin(text);
+        if (vin) {
+          var form = $("inspection-form");
+          if (form && form.vin) {
+            form.vin.value = vin;
+            try { form.vin.dispatchEvent(new Event("input", { bubbles: true })); } catch (e) {}
+          }
+          if (status) status.textContent = "Found: " + vin;
+          toast("VIN scanned: " + vin);
+          closeVinScan();
+          updateProgress();
+        } else {
+          if (status) status.textContent = "No VIN found — try again closer / better light";
+          toast("Could not read VIN — try again");
+        }
+      }).catch(function (err) {
+        console.error(err);
+        if (status) status.textContent = "Scan failed";
+        toast("Scan failed — try again");
+      });
+    });
+  }
+
+  function bindVinScan() {
+    var scanBtn = $("btn-scan-vin");
+    if (scanBtn) scanBtn.onclick = openVinScan;
+    var closeBtn = $("btn-close-scan");
+    if (closeBtn) closeBtn.onclick = closeVinScan;
+    var cancelBtn = $("btn-cancel-scan");
+    if (cancelBtn) cancelBtn.onclick = closeVinScan;
+    var captureBtn = $("btn-capture-vin");
+    if (captureBtn) captureBtn.onclick = captureAndReadVin;
+  }
+
+  function setStatus(msg) {
+    try {
+      var st = document.getElementById("js-status");
+      if (st) st.textContent = msg;
+    } catch (e) {}
+  }
+
+  function init() {
+    setStatus("Starting…");
+    try {
+      bindNav();
+      setStatus("Nav OK");
+      bindCompanyButtons();
+      bindVehicleButtons();
+      bindForm();
+      bindPhotos();
+      try { bindVinScan(); } catch (e1) { console.warn("VIN scan bind failed", e1); }
+      try { seed(); } catch (e2) { console.warn("seed failed", e2); }
+      try { resetForm(true); } catch (e3) { console.warn("resetForm failed", e3); }
+      setStatus("Ready");
+      toast("M Oil app ready");
+    } catch (err) {
+      console.error(err);
+      setStatus("Error");
+      var msg = (err && err.message) ? err.message : String(err);
+      try { alert("App error: " + msg); } catch (e) {}
+    }
+  }
+
+  // Run as soon as possible
+  setStatus("JS loaded");
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+  // Safety: if still not ready after 2s, try again
+  setTimeout(function () {
+    var st = document.getElementById("js-status");
+    if (st && st.textContent !== "Ready") {
+      try { init(); } catch (e) {}
+    }
+  }, 2000);
+})();
+
+</script>
+
+</body>
+</html>
